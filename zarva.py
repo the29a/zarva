@@ -38,13 +38,13 @@ def zarva_list_images():
 def zarva_list_summary():
     images = client.images.list(all=True)
     found_image = None
-    image_name_or_id = sys.argv[2] if len(sys.argv) > 2 else None
+    image_short_id = sys.argv[2] if len(sys.argv) > 2 else None
     for image in images:
         image_name_or_id = image.short_id.replace("sha256:", "")
         if (image_name_or_id == image.id or
             image_name_or_id in image.tags or    
-            image_name_or_id == image.short_id or 
-            image_name_or_id.startswith(image_name_or_id) or
+            image_name_or_id == image_short_id or 
+            image_short_id.startswith(image_name_or_id) or
             any(image_name_or_id in tag for tag in (image.tags or []))):
             found_image = image
             break
@@ -58,13 +58,13 @@ def zarva_list_summary():
 def zarva_list_env():
     images = client.images.list(all=True)
     found_image = None
-    image_name_or_id = sys.argv[2] if len(sys.argv) > 2 else None
+    image_short_id = sys.argv[2] if len(sys.argv) > 2 else None
     for image in images:
         image_name_or_id = image.short_id.replace("sha256:", "")
         if (image_name_or_id == image.id or
             image_name_or_id in image.tags or    
-            image_name_or_id == image.short_id or 
-            image_name_or_id.startswith(image_name_or_id) or
+            image_name_or_id == image_short_id or 
+            image_short_id.startswith(image_name_or_id) or
             any(image_name_or_id in tag for tag in (image.tags or []))):
             found_image = image
             break
@@ -83,11 +83,11 @@ def zarva_list_history():
     found_image = None
     image_name_or_id = sys.argv[2] if len(sys.argv) > 2 else None
     for image in images:
-        image_name_or_id = image.short_id.replace("sha256:", "")
+        image_short_id = image.short_id.replace("sha256:", "")
         if (image_name_or_id == image.id or
             image_name_or_id in image.tags or    
-            image_name_or_id == image.short_id or 
-            image_name_or_id.startswith(image_name_or_id) or
+            image_name_or_id == image_short_id or 
+            image_short_id.startswith(image_name_or_id) or
             any(image_name_or_id in tag for tag in (image.tags or []))):
             found_image = image
             break
@@ -140,6 +140,35 @@ if len(sys.argv) == 1 or sys.argv[1] in ["--help", "-h"]:
 elif sys.argv[1] in ["-li", "--list-image"]:
     zarva_list_images()
 elif sys.argv[1] in ["-ls", "--list-summary"]:
+    if len(sys.argv) < 3:
+        print("Missing Target.")
+        print("You can use -t or --target as argument.")
+    else:
+        image_name_or_id = sys.argv[2]  # Передаем image_name_or_id
+        zarva_list_summary()
+elif sys.argv[1] in ["-le", "--list-env"]:
+    if len(sys.argv) < 3:
+        print("Missing Target.")
+        print("You can use -t or --target as argument.")
+    else:
+        image_name_or_id = sys.argv[2]  # Передаем image_name_or_id
+        zarva_list_env()
+elif sys.argv[1] in ["-lh", "--list-history"]:
+    if len(sys.argv) < 3:
+        print("Missing Target.")
+        print("You can use -t or --target as argument.")
+    else:
+        image_name_or_id = sys.argv[2]  # Передаем image_name_or_id
+        zarva_list_history()
+else:
+    print("Invalid arguments, aborting.")
+
+
+'''if len(sys.argv) == 1 or sys.argv[1] in ["--help", "-h"]:
+    zarva_help()
+elif sys.argv[1] in ["-li", "--list-image"]:
+    zarva_list_images()
+elif sys.argv[1] in ["-ls", "--list-summary"]:
     zarva_list_summary()
 elif sys.argv[1] in ["-le", "--list-env"]:
     zarva_list_env()
@@ -147,3 +176,4 @@ elif sys.argv[1] in ["-lh", "--list-history"]:
     zarva_list_history()
 else:
     print("Invalid arguments, aborting.")
+'''
