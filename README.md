@@ -24,14 +24,25 @@ python3 zarva.py [OPTION]
 ```
 
 ##### Running in Docker
-You can build image manualy:
+Pull image from GHCR:
+```bash
+docker pull ghcr.io/the29a/zarva:latest
+```
 
+Or you can build image manualy:
 ```bash
 docker build -t zarva .
 ```
 
 Run zarva inside Docker:
 ```shell
+# Pulled image
+docker run -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/the29a/zarva -li                    
+ID                   Name/Tags                      Size   
+-----------------------------------------------------------------
+1cb1059880dd         ghcr.io/the29a/zarva:latest    457.01  MB
+
+# Builded image
 docker run -v /var/run/docker.sock:/var/run/docker.sock zarva -li 
 ID                   Name/Tags                      Size   
 -----------------------------------------------------------------
