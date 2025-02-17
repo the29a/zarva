@@ -144,36 +144,21 @@ elif sys.argv[1] in ["-ls", "--list-summary"]:
         print("Missing Target.")
         print("You can use -t or --target as argument.")
     else:
-        image_name_or_id = sys.argv[2]  # Передаем image_name_or_id
+        image_name_or_id = sys.argv[2] 
         zarva_list_summary()
 elif sys.argv[1] in ["-le", "--list-env"]:
     if len(sys.argv) < 3:
         print("Missing Target.")
         print("You can use -t or --target as argument.")
     else:
-        image_name_or_id = sys.argv[2]  # Передаем image_name_or_id
+        image_name_or_id = sys.argv[2] 
         zarva_list_env()
 elif sys.argv[1] in ["-lh", "--list-history"]:
     if len(sys.argv) < 3:
         print("Missing Target.")
         print("You can use -t or --target as argument.")
     else:
-        image_name_or_id = sys.argv[2]  # Передаем image_name_or_id
+        image_name_or_id = sys.argv[2]
         zarva_list_history()
 else:
     print("Invalid arguments, aborting.")
-
-
-'''if len(sys.argv) == 1 or sys.argv[1] in ["--help", "-h"]:
-    zarva_help()
-elif sys.argv[1] in ["-li", "--list-image"]:
-    zarva_list_images()
-elif sys.argv[1] in ["-ls", "--list-summary"]:
-    zarva_list_summary()
-elif sys.argv[1] in ["-le", "--list-env"]:
-    zarva_list_env()
-elif sys.argv[1] in ["-lh", "--list-history"]:
-    zarva_list_history()
-else:
-    print("Invalid arguments, aborting.")
-'''
