@@ -23,6 +23,22 @@
 python3 zarva.py [OPTION]
 ```
 
+##### Running in Docker
+You can build image manualy:
+
+```bash
+docker build -t zarva .
+```
+
+Run zarva inside Docker:
+```shell
+docker run -v /var/run/docker.sock:/var/run/docker.sock zarva -li 
+ID                   Name/Tags                      Size   
+-----------------------------------------------------------------
+35ac1920cce2         zarva:latest                   457.02  MB
+```
+
+
 ##### **Examples:**
 - List Docker images:
   ```bash
@@ -57,5 +73,6 @@ python3 zarva.py [OPTION]
 
 ---
 #### TODO
-- [ ] Running zarva in Docker
+- [x] Running zarva in Docker
+- [ ] Move from ubuntu to alpine
 - [ ] Remade exaple dockerfiles

@@ -2,12 +2,20 @@
 import sys
 import docker
 from pprint import pprint
+import os
+
+
+#os.environ['DOCKER_HOST'] = 'unix://var/run/docker.sock'
 
 client = docker.from_env()
-images = client.images.list(all=True)
+
+# Examples from documentation
+# client = docker.DockerClient(base_url='unix://var/run/docker.sock')
+# client = docker.APIClient(base_url='unix://var/run/docker.sock')
 
 # List Docker images (docker image ls like)
 def zarva_list_images():
+    images = client.images.list(all=True)
     print(f"{'ID':<20} {'Name/Tags':<30} {'Size':<7}")
     print("-" * 65)
     # Print image info
@@ -28,7 +36,9 @@ def zarva_list_images():
 
 # List Docker image summary info (docker inspect like)
 def zarva_list_summary():
+    images = client.images.list(all=True)
     found_image = None
+    image_name_or_id = sys.argv[2] if len(sys.argv) > 2 else None
     for image in images:
         image_name_or_id = image.short_id.replace("sha256:", "")
         if (image_name_or_id == image.id or
@@ -46,7 +56,9 @@ def zarva_list_summary():
 
 # List Docker Image env only 
 def zarva_list_env():
+    images = client.images.list(all=True)
     found_image = None
+    image_name_or_id = sys.argv[2] if len(sys.argv) > 2 else None
     for image in images:
         image_name_or_id = image.short_id.replace("sha256:", "")
         if (image_name_or_id == image.id or
@@ -61,13 +73,15 @@ def zarva_list_env():
     if found_image:
         # Show info
         print("Environment Variables:")
-        print(*image.attrs["Config"]["Env"], sep="\n")
+        print(*found_image.attrs["Config"]["Env"], sep="\n")
     else:
         print(f"Image '{image_name_or_id}' not found.")
 
 # Show image history
 def zarva_list_history():
+    images = client.images.list(all=True)
     found_image = None
+    image_name_or_id = sys.argv[2] if len(sys.argv) > 2 else None
     for image in images:
         image_name_or_id = image.short_id.replace("sha256:", "")
         if (image_name_or_id == image.id or
